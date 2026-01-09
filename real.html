@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Real-Time Resume Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="final.css">
+    <link rel="icon" type="image/png" href="final.png">
+</head>
+<body>
+    <header>
+    <nav>
+        <img src="final.png" alt="MyWebsite Logo" class="logo">
+        <div class="logo">My Student Resume Builder Website</div>
+        <ul>
+            <p style="color: white; font-size: large;">Welcome To My student Resume Builder - Real Time Builder</p>
+        </ul>
+    </nav>
+</header>
+
+<div class="main-container">
+    <div class="input-panel">
+        <h2>Resume Details</h2>
+        
+        <label for="fileIn" class="camera-upload">
+            <i class="fas fa-camera fa-2x"></i>
+            <span style="font-size: 10px; font-weight: bold; margin-top: 5px;">PHOTO</span>
+        </label>
+        <input type="file" id="fileIn" accept="image/*" style="display:none;" onchange="loadImage(event)">
+
+        <input type="text" id="nameIn" placeholder="Full Name" oninput="liveUpdate()">
+        <input type="text" id="jobIn" placeholder="Professional Title (e.g. Software Engineer)" oninput="liveUpdate()">
+        <input type="email" id="emailIn" placeholder="Email Address" oninput="liveUpdate()">
+        <input type="text" id="phoneIn" placeholder="Phone Number" oninput="liveUpdate()">
+        
+        <label>Professional Summary</label>
+        <textarea id="descIn" rows="4" placeholder="Briefly tell about yourself..." oninput="liveUpdate()"></textarea>
+        
+        <label>Education</label>
+        <textarea id="eduIn" rows="3" placeholder="Degree, Institution (2020-2024)" oninput="liveUpdate()"></textarea>
+        
+        <label>Top Skills</label>
+        <input type="text" id="skillsIn" placeholder="JavaScript, Python, Leadership..." oninput="liveUpdate()">
+
+        <button class="btn-print" onclick="window.print()">
+            <i class="fas fa-file-pdf"></i> DOWNLOAD PDF
+        </button>
+    </div>
+
+    <div class="preview-panel">
+        
+        <div class="resume-glass">
+            <div class="glass-card">
+                <div class="glass-header">
+                    <img id="p1" src="https://via.placeholder.com/150" alt="Profile">
+                    <div class="glass-title">
+                        <h1 class="outName">YOUR NAME</h1>
+                        <p class="outJob" style="color: var(--accent);">Target Job Position</p>
+                    </div>
+                </div>
+                <div class="glass-section">
+                    <h3><i class="fas fa-user-circle"></i> About Me</h3>
+                    <p class="outDesc">Your professional story starts here...</p>
+                </div>
+                <div style="display: flex; gap: 30px;">
+                    <div style="flex:1" class="glass-section">
+                        <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                        <p class="outEdu">Academic details...</p>
+                    </div>
+                    <div style="flex:1" class="glass-section">
+                        <h3><i class="fas fa-tools"></i> Skills</h3>
+                        <p class="outSkills">List of skills...</p>
+                    </div>
+                </div>
+                <div class="glass-section" style="margin-top: 20px; font-size: 13px; opacity: 0.8;">
+                    <i class="fas fa-envelope"></i> <span class="outEmail">email@example.com</span> | 
+                    <i class="fas fa-phone"></i> <span class="outPhone">0300-1234567</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="resume-corporate">
+            <div class="corp-sidebar">
+                <img id="p2" src="https://via.placeholder.com/150" alt="Profile">
+                <p style="font-weight: bold; margin-bottom: 5px; color: var(--accent);">CONTACT</p>
+                <p style="font-size: 13px; margin-bottom: 10px;" class="outEmail">email@example.com</p>
+                <p style="font-size: 13px;" class="outPhone">0300-1234567</p>
+                
+                <p style="font-weight: bold; margin-top: 30px; margin-bottom: 5px; color: var(--accent);">CORE SKILLS</p>
+                <p style="font-size: 13px; line-height: 1.8;" class="outSkills">Enter your skills list...</p>
+            </div>
+            <div class="corp-main">
+                <h1 class="outName">YOUR NAME</h1>
+                <p class="outJob" style="font-size: 18px; margin-top: 5px; color: #666;">Job Title</p>
+                
+                <div class="corp-section-title"><i class="fas fa-id-card"></i> PROFILE SUMMARY</div>
+                <p class="outDesc" style="margin-top: 10px; font-size: 15px; color: #444; line-height: 1.6;">Start typing to see your summary here...</p>
+                
+                <div class="corp-section-title"><i class="fas fa-university"></i> EDUCATION</div>
+                <p class="outEdu" style="margin-top: 10px; font-size: 15px; color: #444;">Details will appear here...</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Handle Image Upload
+    function loadImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            document.getElementById('p1').src = reader.result;
+            document.getElementById('p2').src = reader.result;
+        }
+        if(event.target.files[0]) {
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+
+    // Real-Time Update Logic
+    function liveUpdate() {
+        const map = {
+            'nameIn': '.outName',
+            'jobIn': '.outJob',
+            'emailIn': '.outEmail',
+            'phoneIn': '.outPhone',
+            'descIn': '.outDesc',
+            'eduIn': '.outEdu',
+            'skillsIn': '.outSkills'
+        };
+
+        for (let key in map) {
+            let value = document.getElementById(key).value;
+            let elements = document.querySelectorAll(map[key]);
+            elements.forEach(el => {
+                el.innerText = value || (key === 'nameIn' ? "YOUR NAME" : "...");
+            });
+        }
+    }
+</script>
+
+</body>
+</html>
