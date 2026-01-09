@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Student Resume Builder</title>
+    <link rel="icon" type="image/png" href="final.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="final.css">
+</head>
+<body>
+
+<header>
+    <nav>
+        <img src="final.png" alt="MyWebsite Logo" class="logo">
+        <div class="logo">STUDENT RESUME BUILDER</div>
+        <ul>
+            <p style="color: white; font-size: large;">Welcome To My student Resume Builder - Professional Resume Builder</p>
+        </ul>
+    </nav>
+</header>
+
+<div class="main-layout">
+    <div class="input-form">
+        <h2>Resume Details</h2>
+        
+        <div class="upload-container">
+            <label for="picIn" class="camera-btn">
+                <i class="fas fa-camera"></i>
+                <span>Photo</span>
+            </label>
+            <input type="file" id="picIn" accept="image/*" onchange="previewImage(event)" style="display: none;">
+        </div>
+        
+        <div class="input-group">
+            <div>
+                <label>Full Name</label>
+                <input type="text" id="nameIn" placeholder="Enter Name" oninput="updateAll()">
+            </div>
+            <div>
+                <label>Job Title</label>
+                <input type="text" id="jobIn" placeholder="e.g. Web Developer" oninput="updateAll()">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div>
+                <label>Email</label>
+                <input type="email" id="emailIn" placeholder="email@example.com" oninput="updateAll()">
+            </div>
+            <div>
+                <label>Phone</label>
+                <input type="text" id="phoneIn" placeholder="0300-1234567" oninput="updateAll()">
+            </div>
+        </div>
+        
+        <label>Professional Summary</label>
+        <textarea id="descIn" rows="4" placeholder="Briefly describe your goals and experience..." oninput="updateAll()"></textarea>
+        
+        <label>Education</label>
+        <textarea id="eduIn" rows="3" placeholder="Degree, University, Year" oninput="updateAll()"></textarea>
+        
+        <label>Skills</label>
+        <input type="text" id="skillsIn" placeholder="HTML, CSS, JavaScript, etc." oninput="updateAll()">
+        
+        <button onclick="window.print()" class="print-btn">
+            <i class="fas fa-file-pdf"></i> Download Professional PDF
+        </button>
+    </div>
+
+    <div class="templates-preview">
+        
+        <div class="resume-card template-blue">
+            <div class="blue-header">
+                <img id="outPic1" src="https://via.placeholder.com/150" class="profile-img-circle">
+                <div class="header-text">
+                    <h1 class="outName">YOUR NAME</h1>
+                    <p class="outJob" style="opacity: 0.9;">Job Title</p>
+                </div>
+            </div>
+            <div class="content">
+                <div class="section-title">Profile Summary</div>
+                <p class="outDesc" style="line-height: 1.6;">Your professional summary will appear here...</p>
+                
+                <div class="section-title">Contact Information</div>
+                <p>📧 <span class="outEmail">email@example.com</span></p>
+                <p>📞 <span class="outPhone">0300-1234567</span></p>
+                
+                <div class="section-title">Education</div>
+                <p class="outEdu">Your educational background...</p>
+                
+                <div class="section-title">Technical Skills</div>
+                <p class="outSkills">Your skills list...</p>
+            </div>
+        </div>
+
+        <div class="resume-card template-slate">
+            <div class="side-bar">
+                <img id="outPic2" src="https://via.placeholder.com/150" class="profile-img-square">
+                <h4>CONTACT</h4>
+                <p class="outEmail" style="font-size: 11px; margin-bottom: 5px;">email@example.com</p>
+                <p class="outPhone" style="font-size: 12px;">0300-1234567</p>
+                
+                <h4>SKILLS</h4>
+                <p class="outSkills" style="font-size: 12px; line-height: 1.5;">Skills list...</p>
+            </div>
+            <div class="main-body">
+                <h1 class="outName">YOUR NAME</h1>
+                <p class="outJob" style="color: #34495e; font-weight: bold; text-transform: uppercase; font-size: 14px;">JOB TITLE</p>
+                <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
+                
+                <h4>PROFESSIONAL PROFILE</h4>
+                <p class="outDesc" style="font-size: 14px; line-height: 1.6;">Summary description...</p>
+                
+                <h4>ACADEMIC HISTORY</h4>
+                <p class="outEdu" style="font-size: 14px;">Education details...</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            document.getElementById('outPic1').src = reader.result;
+            document.getElementById('outPic2').src = reader.result;
+        }
+        if(event.target.files[0]) {
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+
+    function updateAll() {
+        const fields = ['name', 'job', 'email', 'phone', 'edu', 'skills', 'desc'];
+        fields.forEach(field => {
+            const val = document.getElementById(field + 'In').value;
+            const outputs = document.querySelectorAll('.out' + field.charAt(0).toUpperCase() + field.slice(1));
+            outputs.forEach(output => {
+                output.innerText = val || (field === 'name' ? "YOUR NAME" : "...");
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
