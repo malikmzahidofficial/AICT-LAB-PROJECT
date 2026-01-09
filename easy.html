@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Resume Builder | Student Professional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="final.css">
+    <link rel="icon" type="image/png" href="final.png">
+</head>
+<body>
+
+<header>
+    <nav>
+        <img src="final.png" alt="MyWebsite Logo" class="logo">
+        <div class="logo">My Student Resume Builder Website</div>
+        <ul>
+            <p style="color: white; font-size: large;">Welcome To My student Resume Builder - Real & Easy Resume Builder</p>
+        </ul>
+    </nav>
+</header>
+
+<div class="main-layout">
+    <div class="input-form">
+        <h2>Easy Editor</h2>
+        
+        <div class="upload-wrapper">
+            <label for="picIn" class="camera-btn">
+                <i class="fas fa-camera"></i>
+                <span style="font-size: 9px;">PHOTO</span>
+            </label>
+            <input type="file" id="picIn" accept="image/*" onchange="previewImage(event)" style="display: none;">
+        </div>
+
+        <input type="text" id="nameIn" placeholder="Full Name" oninput="updateAll()">
+        <input type="text" id="jobIn" placeholder="Job Title (e.g. Sales Executive)" oninput="updateAll()">
+        <input type="email" id="emailIn" placeholder="Email Address" oninput="updateAll()">
+        <input type="text" id="phoneIn" placeholder="Phone Number" oninput="updateAll()">
+        
+        <label>About Me</label>
+        <textarea id="descIn" rows="3" placeholder="I am a hardworking student..." oninput="updateAll()"></textarea>
+        
+        <label>Education</label>
+        <textarea id="eduIn" rows="3" placeholder="Metric / Inter / University details" oninput="updateAll()"></textarea>
+        
+        <label>Skills</label>
+        <input type="text" id="skillsIn" placeholder="MS Office, Communication, etc." oninput="updateAll()">
+        
+        <button onclick="window.print()" class="print-btn"><i class="fas fa-print"></i> Print Resume</button>
+    </div>
+
+    <div class="templates-preview">
+        
+        <div class="resume-card format-clean">
+            <div class="header">
+                <img id="outPic1" src="https://via.placeholder.com/100" class="profile-img">
+                <h1 class="outName">YOUR NAME</h1>
+                <p class="outJob" style="color: #3498db; font-weight: bold;">JOB TITLE</p>
+                <p>Email: <span class="outEmail">email@example.com</span> | Phone: <span class="outPhone">0300-0000000</span></p>
+            </div>
+            
+            <div class="sub-heading">PROFILE SUMMARY</div>
+            <p class="outDesc">Your description will appear here...</p>
+            
+            <div class="sub-heading">ACADEMIC DETAILS</div>
+            <p class="outEdu">Education history...</p>
+            
+            <div class="sub-heading">CORE SKILLS</div>
+            <p class="outSkills">List of skills...</p>
+        </div>
+
+        <div class="resume-card format-borders">
+            <div class="header-box">
+                <img id="outPic2" src="https://via.placeholder.com/100" class="profile-img">
+                <div>
+                    <h1 class="outName" style="color: #2c3e50; font-size: 30px;">YOUR NAME</h1>
+                    <p class="outJob">Job Title</p>
+                    <div class="contact-info">
+                        <span><i class="fas fa-envelope"></i> <span class="outEmail">email@example.com</span></span>
+                        <span><i class="fas fa-phone"></i> <span class="outPhone">0300-0000000</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>PROFESSIONAL OBJECTIVE</h2>
+            <p class="outDesc" style="color: #444; font-size: 13px;">About yourself...</p>
+
+            <h2>EDUCATION</h2>
+            <p class="outEdu" style="color: #444; font-size: 13px;">School/College details...</p>
+
+            <h2>SKILLS & EXPERTISE</h2>
+            <p class="outSkills" style="color: #444; font-size: 13px;">Skills list...</p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Image Preview
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            document.getElementById('outPic1').src = reader.result;
+            document.getElementById('outPic2').src = reader.result;
+        }
+        if(event.target.files[0]) {
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+
+    // Live Update Logic
+    function updateAll() {
+        const fields = ['name', 'job', 'email', 'phone', 'edu', 'skills', 'desc'];
+        fields.forEach(field => {
+            const val = document.getElementById(field + 'In').value;
+            const outputs = document.querySelectorAll('.out' + field.charAt(0).toUpperCase() + field.slice(1));
+            outputs.forEach(output => {
+                output.innerText = val || (field === 'name' ? "YOUR NAME" : "...");
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
